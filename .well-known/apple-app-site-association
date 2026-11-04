@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["RPB3W5DYNJ.com.adammautz.liftr"],
+        "components": [{ "/": "/dropset/s/*", "comment": "Shared workouts and plans" }]
+      }
+    ]
+  }
+}

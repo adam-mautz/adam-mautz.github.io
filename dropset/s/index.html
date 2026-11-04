@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="apple-itunes-app" content="app-id=6830416136">
+<title>Dropset</title>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    margin: 0;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+    background: #0B0B0F;
+    color: #F2F2F5;
+    font-family: -apple-system, system-ui, sans-serif;
+    text-align: center;
+  }
+  main { width: 100%; max-width: 340px; }
+  img { width: 96px; height: 96px; border-radius: 22px; }
+  h1 { margin: 20px 0 6px; font-size: 26px; }
+  p { margin: 0; color: #9A9AA6; line-height: 1.4; }
+  .store {
+    display: block;
+    margin-top: 28px;
+    padding: 15px;
+    border-radius: 999px;
+    background: #7C4DFF;
+    color: #FFFFFF;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .open {
+    display: block;
+    margin-top: 12px;
+    padding: 15px;
+    color: #B79CFF;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .hint { margin-top: 16px; font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <img src="icon.png" alt="">
+  <h1>Dropset</h1>
+  <p>Track lifts and drop them on the feed</p>
+  <a class="store" href="https://apps.apple.com/app/id6830416136">Download on the App Store</a>
+  <a class="open" id="open" hidden>I already have Dropset</a>
+  <p class="hint" id="hint" hidden>Someone sent you a workout. After you install, tap their link again to open it.</p>
+</main>
+<script>
+  // The share lives in the fragment, which browsers never send to the server, so this page
+  // only reads it locally. People with the app skip this page entirely via Universal Links.
+  const match = location.hash.match(/^#d=([A-Za-z0-9_-]+)$/);
+  if (match) {
+    const open = document.getElementById("open");
+    open.href = "dropset://share?d=" + match[1];
+    open.hidden = false;
+    document.getElementById("hint").hidden = false;
+  }
+</script>
+</body>
+</html>
