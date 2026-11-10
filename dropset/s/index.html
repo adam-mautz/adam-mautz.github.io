@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
 <meta name="apple-itunes-app" content="app-id=6830416136">
-<title>Dropset</title>
+<title>DropSet</title>
 <style>
   :root { color-scheme: dark; }
   body {
@@ -49,21 +49,24 @@
 <body>
 <main>
   <img src="icon.png" alt="">
-  <h1>Dropset</h1>
+  <h1>DropSet</h1>
   <p>Track lifts and drop them on the feed</p>
   <a class="store" href="https://apps.apple.com/app/id6830416136">Download on the App Store</a>
-  <a class="open" id="open" hidden>I already have Dropset</a>
+  <a class="open" id="open" hidden>I already have DropSet</a>
   <p class="hint" id="hint" hidden>Someone sent you a workout. After you install, tap their link again to open it.</p>
 </main>
 <script>
   // The share lives in the fragment, which browsers never send to the server, so this page
   // only reads it locally. People with the app skip this page entirely via Universal Links.
-  const match = location.hash.match(/^#d=([A-Za-z0-9_-]+)$/);
-  if (match) {
+  const workout = location.hash.match(/^#d=([A-Za-z0-9_-]+)$/);
+  const profile = location.hash.match(/^#u=([a-z0-9_.]{3,20})$/);
+  if (workout || profile) {
     const open = document.getElementById("open");
-    open.href = "dropset://share?d=" + match[1];
+    const hint = document.getElementById("hint");
+    open.href = workout ? "dropset://share?d=" + workout[1] : "dropset://profile?u=" + profile[1];
     open.hidden = false;
-    document.getElementById("hint").hidden = false;
+    if (profile) hint.textContent = "Someone sent you a profile. After you install, tap their link again to open it.";
+    hint.hidden = false;
   }
 </script>
 </body>
