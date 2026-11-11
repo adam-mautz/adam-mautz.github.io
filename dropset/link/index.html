@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Link DropSet</title>
+<link rel="stylesheet" href="../page.css">
+<style>
+  .step { margin: 24px 0; }
+  .qr { display: inline-block; padding: 16px; background: #FFFFFF; border-radius: 16px; border: 1px solid var(--rule); }
+  .qr img, .qr canvas { display: block; width: 220px; height: 220px; }
+  .button { display: inline-block; padding: 14px 28px; border-radius: 999px; background: var(--accent); color: var(--bg); font-weight: 600; text-decoration: none; }
+  .status { color: var(--muted); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+<header><img src="../s/icon.png" alt=""><a href="../support/">DropSet</a></header>
+<h1>Link DropSet</h1>
+
+<div id="missing" hidden>
+<p>Start from your assistant: add the DropSet connector, then choose Connect. It opens this page with what DropSet needs.</p>
+</div>
+
+<div id="desktop" hidden>
+<p>Approve in the DropSet app on your iPhone. Scan this with the iPhone camera:</p>
+<div class="step"><div class="qr" id="qr" role="img" aria-label="QR code that opens DropSet"></div></div>
+<p class="muted">DropSet shows which assistant is asking. Approve only if you started this yourself just now.</p>
+</div>
+
+<div id="phone" hidden>
+<p>Approve in the DropSet app. It shows which assistant is asking; approve only if you started this yourself just now.</p>
+<div class="step"><a class="button" id="open">Open DropSet</a></div>
+<p class="muted">Don't have it? <a href="https://apps.apple.com/app/id6830416136">Get DropSet on the App Store</a>.</p>
+</div>
+
+<p class="status" id="status" aria-live="polite" hidden>Waiting for the app. Keep this page open.</p>
+<p class="status" id="done" aria-live="polite" hidden>Approved. Returning to your assistant.</p>
+<p class="status" id="expired" hidden>This request expired. Go back to your assistant and choose Connect again.</p>
+
+<footer><a href="../privacy/">Privacy Policy</a><a href="../support/">Support</a></footer>
+</main>
+<script src="qrcode.min.js"></script>
+<script>
+// The OAuth consent step for assistants. Supabase sends the browser here with an authorization
+// id; the person approves in the app, which leaves the resulting redirect on the server under
+// that id, and this page collects it and continues to the assistant. The publishable key is
+// the same one the app ships with.
+(function () {
+  const host = 'https://kevqormfyfjecrhbcsav.supabase.co';
+  const key = 'sb_publishable_Qy88FpxbVio_hTxeTNSzig_f03A3STr';
+  const id = new URLSearchParams(location.search).get('authorization_id') || '';
+  const show = (el, on = true) => { document.getElementById(el).hidden = !on; };
+  if (!/^[A-Za-z0-9-]{8,200}$/.test(id)) { show('missing'); return; }
+
+  const query = '?authorization_id=' + encodeURIComponent(id);
+  const isPhone = /iPhone|iPod|Android/.test(navigator.userAgent);
+  if (isPhone) {
+    document.getElementById('open').href = 'dropset://link' + query;
+    show('phone');
+  } else {
+    // The camera opens this as a universal link straight into the app.
+    new QRCode(document.getElementById('qr'), {
+      text: location.origin + '/dropset/approve/' + query,
+      width: 440, height: 440, correctLevel: QRCode.CorrectLevel.M
+    });
+    show('desktop');
+  }
+  show('status');
+
+  const started = Date.now();
+  async function poll() {
+    if (Date.now() - started > 10 * 60 * 1000) { show('status', false); show('expired'); return; }
+    try {
+      const response = await fetch(host + '/rest/v1/rpc/collect_assistant_link', {
+        method: 'POST',
+        headers: { 'apikey': key, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ authorization_id: id })
+      });
+      if (response.ok) {
+        const url = await response.json();
+        if (typeof url === 'string' && /^https:\/\/claude\.(ai|com)\//.test(url)) {
+          show('status', false); show('done');
+          location.replace(url);
+          return;
+        }
+      }
+    } catch (e) {}
+    setTimeout(poll, 2000);
+  }
+  poll();
+})();
+</script>
+</body>
+</html>

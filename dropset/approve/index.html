@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<meta name="apple-itunes-app" content="app-id=6830416136">
+<title>Approve in DropSet</title>
+<link rel="stylesheet" href="../page.css">
+<style>
+  .button { display: inline-block; margin: 16px 0; padding: 14px 28px; border-radius: 999px; background: var(--accent); color: var(--bg); font-weight: 600; text-decoration: none; }
+</style>
+</head>
+<body>
+<main>
+<header><img src="../s/icon.png" alt=""><a href="../support/">DropSet</a></header>
+<h1>Approve in DropSet</h1>
+<!-- With the app installed, the camera opens this link in the app and this page never shows. -->
+<p>An assistant asked to link to your DropSet account. Open the app to see which one and approve or deny it.</p>
+<a class="button" id="open">Open DropSet</a>
+<p class="muted">Don't have it? <a href="https://apps.apple.com/app/id6830416136">Get DropSet on the App Store</a>.</p>
+<footer><a href="../privacy/">Privacy Policy</a><a href="../support/">Support</a></footer>
+</main>
+<script>
+  document.getElementById('open').href = 'dropset://link' + location.search;
+</script>
+</body>
+</html>

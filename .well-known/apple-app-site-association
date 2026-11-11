@@ -3,7 +3,10 @@
     "details": [
       {
         "appIDs": ["RPB3W5DYNJ.com.adammautz.liftr"],
-        "components": [{ "/": "/dropset/s/*", "comment": "Shared workouts and plans" }]
+        "components": [
+          { "/": "/dropset/s/*", "comment": "Shared workouts and plans" },
+          { "/": "/dropset/approve/*", "comment": "Approving an AI assistant, scanned from the link page" }
+        ]
       }
     ]
   }
