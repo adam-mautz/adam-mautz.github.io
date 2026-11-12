@@ -49,6 +49,15 @@
 </ul>
 <p>Only assistants you've linked can read these, and only for your account. What an assistant reads is then handled by its provider under that provider's terms and privacy policy; for Claude, that's Anthropic. An assistant never sees Apple Health data, and nothing it suggests changes your programs until you approve it in the app. Unlinking your last assistant, or deleting your account, deletes all of it from DropSet's server.</p>
 
+<h2>DropSet Coach (optional)</h2>
+<p>With DropSet Plus you can ask DropSet Coach, the built-in assistant, about your training. Coach runs on Claude, an AI model made by Anthropic. The first time you open it, the app asks before anything is sent. When you ask a question, the app sends Anthropic, through DropSet's server, your question, the conversation so far, today's date, your weight unit, the program you follow, and whatever Coach looks up on your phone to answer: workouts, sets, effort ratings, records, programs, and lift names. Anthropic processes it to answer under its commercial terms and doesn't use it to train its models.</p>
+<ul>
+  <li>Never sent: your name, email, Apple Health data, or body measurements.</li>
+  <li>Your conversation is kept on your phone only, and is cleared when you start a new chat or someone else signs in. DropSet's server doesn't store it.</li>
+  <li>DropSet's server keeps a monthly count of how much you've used Coach (requests and tokens), to keep within each account's allowance. It's deleted with your account.</li>
+  <li>Programs Coach suggests change nothing until you review them and tap Add or Apply.</li>
+</ul>
+
 <h2>What DropSet doesn't do</h2>
 <ul>
   <li>No advertising and no ad tracking.</li>
@@ -59,12 +68,13 @@
 <h2>Service providers</h2>
 <ul>
   <li><strong>Supabase</strong> hosts the server and database for social features and AI assistants.</li>
+  <li><strong>Anthropic</strong> provides the Claude model behind DropSet Coach, if you use it.</li>
   <li><strong>Apple</strong> provides iCloud, Sign in with Apple, push notifications, and in-app purchases. DropSet never sees your payment details.</li>
   <li><strong>Google</strong> provides Sign in with Google, if you use it.</li>
 </ul>
 
 <h2>Deleting your data</h2>
-<p>Settings &rarr; Delete account removes your DropSet account from the server right away, including your profile, posts, likes, follows, blocks, device tokens, linked assistants, and anything kept for them. If you signed in with Apple, DropSet also revokes its access to your Apple ID. Reports you sent stay, without your name, so moderation records remain complete. Copies in server backups are gone within 30 days.</p>
+<p>Settings &rarr; Delete account removes your DropSet account from the server right away, including your profile, posts, likes, follows, blocks, device tokens, linked assistants, anything kept for them, and your Coach usage counts. If you signed in with Apple, DropSet also revokes its access to your Apple ID. Reports you sent stay, without your name, so moderation records remain complete. Copies in server backups are gone within 30 days.</p>
 <p>Your workouts stay in your iCloud until you delete them, or the app itself.</p>
 
 <h2>Children</h2>
